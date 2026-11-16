@@ -4,8 +4,8 @@ const cfg = window.APP_CONFIG;
 const pathSegments = window.location.pathname.split('/').filter(Boolean);
 const shopId = pathSegments.length > 0 ? pathSegments[0] : null;
 
-// 2. ดึงเฉพาะเมนูของร้านนั้นๆ จาก window.MENU_ITEMS
-const shopMenuData = (window.MENU_ITEMS && window.MENU_ITEMS[shopId]) ? window.MENU_ITEMS[shopId] : [];
+// 2. ดึงเฉพาะเมนูของร้านนั้นๆ (ถ้าหาร้านไม่เจอ ให้เมนูว่างเปล่า)
+const shopMenuData = window.MENU_ITEMS[shopId] || [];
 const menu = shopMenuData.filter(x => x.active);
 
 const params = new URLSearchParams(location.search); 
@@ -17,14 +17,13 @@ const $ = id => document.getElementById(id);
 const shopName = (cfg.SHOPS && cfg.SHOPS[shopId]) ? cfg.SHOPS[shopId] : (shopId || "ไม่พบข้อมูลร้าน");
 
 if ($("brand")) {
-  $("brand").textContent = shopName;
+    $("brand").textContent = shopName;
 }
 
-if ($("tableLabel")) {
-  $("tableLabel").textContent = shopId && Number.isInteger(table) && table >= 1 && table <= 5 
+$("tableLabel").textContent = shopId && Number.isInteger(table) && table>=1 && table<=5 
     ? `ร้าน ${shopName} โต๊ะ ${table}` 
     : "URL ไม่ถูกต้อง กรุณาสแกน QR ประจำโต๊ะใหม่";
-}
+//}
 
 function client() {
   if (!cfg.SUPABASE_URL.startsWith("https://") || cfg.SUPABASE_ANON_KEY.includes("ใส่_")) {
