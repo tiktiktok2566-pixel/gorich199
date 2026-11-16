@@ -35,7 +35,7 @@ function client() {
 function render() { 
   $("menu").innerHTML = menu.map(m => `
     <article class="item">
-      <img src="${esc(m.image || '/images/no-image.jpg')}" alt="${esc(m.name)}" class="menu-image" onerror="this.src='/images/no-image.jpg'">
+      <img src="${(m.image || '/images/no-image.jpg')}" alt="${esc(m.name)}" class="menu-image" onerror="this.src='/images/no-image.jpg'">
       <h3>${esc(m.name)}</h3>
       <div class="price">${m.price} บาท</div>
       <div class="controls">
